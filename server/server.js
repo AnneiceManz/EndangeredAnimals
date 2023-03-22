@@ -74,8 +74,14 @@ app.put('/api/students/:studentId', cors(), async (req, res) =>{
   }
 })
 
-//DELETE student
-
+//endpoint for DELETE student request
+app.delete('/api/students/:studentId', cors(), async (req, res) =>{
+  // console.log(req.params)
+  const studentId = req.params.studentId
+  //DELETE FROM students WHERE id=id
+  await db.query('DELETE FROM students WHERE id=$1', [studentId])
+  res.status(200).end();
+});
 
 
 // console.log that your server is up and running
