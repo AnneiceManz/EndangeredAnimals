@@ -24,6 +24,8 @@ app.get("/api/species", cors(), async (req, res) => {
   }
 });
 
+//
+
 //GET all individuals of one species
 app.get("/api/individual_animals/:species_id", cors(), async (req, res) => {
   try {

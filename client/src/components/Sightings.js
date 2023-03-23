@@ -2,18 +2,9 @@ import React, { useEffect, useState } from "react";
 import SightingRow from "./SightingRow";
 import { Table } from "semantic-ui-react";
 
+
 function Sightings() {
   const [sightings, setSightings] = useState([]);
-
-//   const getSightings = async () => {
-//     try {
-//       const response = await fetch("http://localhost:8080/api/sightings/");
-//       const sightings = await response.json;
-//       setSightings(sightings);
-//     } catch (error) {
-//       console.error(error.message);
-//     }
-//   };
 
   const getSightings = () => {
     fetch("http://localhost:8080/api/sightings")
