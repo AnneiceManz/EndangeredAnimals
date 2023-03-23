@@ -65,6 +65,22 @@ app.get('/api/individual_animals/:individual_id', cors(), async (req, res) => {
   }
 });
 
+//POST new individual animal
+app.post('/api/individual_animals', cors(), async (req, res) => {
+  const newIndividual = {
+    nickname: req.body.nickname,
+    species: req.body.species
+  };
+  console.log([newIndividual.nickname, newIndividual.species]);
+  const result = await db.query(
+    'INSERT INTO individual_animals(nickname, species) VALUES($1, $2) RETURNING *',
+    [newIndividual.nickname, newIndividual.species],
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+
 //GET all sightings of one user/sighter
 app.get('/api/sightings/:sighter_id', cors(), async (req, res) => {
   try {
