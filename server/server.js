@@ -39,7 +39,7 @@ app.get('/api/species/:species_id', cors(), async (req, res) => {
 app.get('/api/sighter/:sighter_id', cors(), async (req, res) => {
   try {
     const sighter_id=req.params.sighter_id;
-    const getOneSighter = await db.query('SELECT * FROM sighter WHERE sighter_id=$1', [sighter_id])
+    const getOneSighter = await db.query('SELECT username FROM sighter WHERE sighter_id=$1', [sighter_id])
     res.send(getOneSighter.rows)
   } catch (error) {
     return res.status(400).json({ error })
