@@ -24,7 +24,27 @@ app.get("/api/species", cors(), async (req, res) => {
   }
 });
 
-//
+//GET species by id
+app.get('/api/species/:species_id', cors(), async (req, res) => {
+  try {
+    const species_id=req.params.species_id;
+    const getOneSpecies = await db.query('SELECT * FROM species WHERE species_id=$1', [species_id])
+    res.send(getOneSpecies.rows)
+  } catch (error) {
+    return res.status(400).json({ error })
+  }
+})
+
+//GET user by id
+app.get('/api/sighter/:sighter_id', cors(), async (req, res) => {
+  try {
+    const sighter_id=req.params.sighter_id;
+    const getOneSighter = await db.query('SELECT * FROM sighter WHERE sighter_id=$1', [sighter_id])
+    res.send(getOneSighter.rows)
+  } catch (error) {
+    return res.status(400).json({ error })
+  }
+})
 
 //GET all individuals of one species
 app.get("/api/individual_animals/:species_id", cors(), async (req, res) => {
