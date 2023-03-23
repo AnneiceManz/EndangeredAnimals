@@ -24,23 +24,23 @@ app.get("/api/species", cors(), async (req, res) => {
   }
 });
 
-//GET species by id
+//GET species common_name by species_id
 app.get('/api/species/:species_id', cors(), async (req, res) => {
   try {
     const species_id=req.params.species_id;
-    const getOneSpecies = await db.query('SELECT * FROM species WHERE species_id=$1', [species_id])
+    const getOneSpecies = await db.query('SELECT common_name FROM species WHERE species_id=$1', [species_id])
     res.send(getOneSpecies.rows)
   } catch (error) {
     return res.status(400).json({ error })
   }
 })
 
-//GET user by id
-app.get('/api/sighter/:sighter_id', cors(), async (req, res) => {
+//GET username by user_id
+app.get('/api/user/:user_id', cors(), async (req, res) => {
   try {
-    const sighter_id=req.params.sighter_id;
-    const getOneSighter = await db.query('SELECT username FROM sighter WHERE sighter_id=$1', [sighter_id])
-    res.send(getOneSighter.rows)
+    const user_id=req.params.user_id;
+    const getOneuser = await db.query('SELECT username FROM user WHERE user_id=$1', [user_id])
+    res.send(getOneuser.rows)
   } catch (error) {
     return res.status(400).json({ error })
   }
@@ -65,7 +65,7 @@ app.get("/api/sightings/:individual_id", cors(), async (req, res) => {
   try {
     const indi_id = req.params.individual_id;
     const allIndividualSightings = await db.query(
-      "SELECT sightings_id, nickname, species, sighted_by,date, time, longitude, latitude, healthy FROM sightings JOIN individual_animals ON individual=individual_id WHERE individual_id=$1",
+      "SELECT sightings_id, nickname, species, submitted_by,date, time, longitude, latitude, healthy FROM sightings JOIN individual_animals ON individual=individual_id WHERE individual_id=$1",
       [indi_id]
     );
     res.send(allIndividualSightings.rows);
@@ -74,25 +74,25 @@ app.get("/api/sightings/:individual_id", cors(), async (req, res) => {
   }
 });
 
-//GET all sighters/users
-app.get("/api/sighter", cors(), async (req, res) => {
+//GET all users
+app.get("/api/user", cors(), async (req, res) => {
   try {
-    const allSighters = await db.query("SELECT * FROM sighter");
-    res.send(allSighters.rows);
+    const allusers = await db.query("SELECT * FROM user");
+    res.send(allusers.rows);
   } catch (e) {
     return res.status(400).json({ e });
   }
 });
 
-//GET all sightings of one user/sighter
-app.get("/api/sightings/:sighter_id", cors(), async (req, res) => {
+//GET all sightings of one user
+app.get("/api/sightings/:user_id", cors(), async (req, res) => {
   try {
-    const sighter_id = req.params.sighter_id;
-    const allSighterSightings = await db.query(
-      "SELECT * FROM sightings JOIN sighter ON sighted_by=sighter_id WHERE sighter_id=$1",
-      [sighter_id]
+    const user_id = req.params.user_id;
+    const alluserSightings = await db.query(
+      "SELECT * FROM sightings JOIN user ON submitted_by=user_id WHERE user_id=$1",
+      [user_id]
     );
-    res.send(allSighterSightings.rows);
+    res.send(alluserSightings.rows);
   } catch (e) {
     return res.status(400).json({ e });
   }
@@ -102,7 +102,7 @@ app.get("/api/sightings/:sighter_id", cors(), async (req, res) => {
 app.get('/api/sightings', cors(), async (req, res) => {
   try {
     const allSightings = await db.query(
-      'SELECT date, time, nickname, species, longitude, latitude, healthy, sighted_by FROM sightings JOIN individual_animals ON individual=individual_id'
+      'SELECT date, time, nickname, species, longitude, latitude, healthy, submitted_by FROM sightings JOIN individual_animals ON individual=individual_id'
     )
     res.send(allSightings.rows);
   } catch (error) {
@@ -162,16 +162,16 @@ app.post("/api/species", cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
-//POST new sighter/user
-app.post("/api/sighter", cors(), async (req, res) => {
-  const newSighter = {
+//POST new user/user
+app.post("/api/user", cors(), async (req, res) => {
+  const newuser = {
     username: req.body.username,
     email: req.body.email,
   };
-  console.log([newSighter.username, newSighter.email]);
+  console.log([newuser.username, newuser.email]);
   const result = await db.query(
-    "INSERT INTO sighter(username, email) VALUES($1, $2) RETURNING *",
-    [newSighter.username, newSighter.email]
+    "INSERT INTO user(username, email) VALUES($1, $2) RETURNING *",
+    [newuser.username, newuser.email]
   );
   console.log(result.rows[0]);
   res.json(result.rows[0]);
@@ -184,7 +184,7 @@ app.post("/api/sightings", cors(), async (req, res) => {
     time: req.body.time,
     individual: req.body.individual,
     healthy: req.body.healthy,
-    sighted_by: req.body.sighted_by,
+    submitted_by: req.body.submitted_by,
     longitude: req.body.longitude,
     latitude: req.body.latitude,
   };
@@ -193,18 +193,18 @@ app.post("/api/sightings", cors(), async (req, res) => {
     newSighting.time,
     newSighting.individual,
     newSighting.healthy,
-    newSighting.sighted_by,
+    newSighting.submitted_by,
     newSighting.longitude,
     newSighting.latitude,
   ]);
   const result = await db.query(
-    "INSERT INTO sightings(date, time, individual, healthy, sighted_by, longitude, latitude) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+    "INSERT INTO sightings(date, time, individual, healthy, submitted_by, longitude, latitude) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
     [
       newSighting.date,
       newSighting.time,
       newSighting.individual,
       newSighting.healthy,
-      newSighting.sighted_by,
+      newSighting.submitted_by,
       newSighting.longitude,
       newSighting.latitude,
     ]
@@ -258,10 +258,10 @@ app.delete(
   }
 );
 
-//DELETE sighter/user
-app.delete("/api/sighter/:sighter_id", cors(), async (req, res) => {
-  const sighter_id = req.params.sighter_id;
-  await db.query("DELETE FROM sighter WHERE sighter_id=$1", [sighter_id]);
+//DELETE user/user
+app.delete("/api/user/:user_id", cors(), async (req, res) => {
+  const user_id = req.params.user_id;
+  await db.query("DELETE FROM user WHERE user_id=$1", [user_id]);
   res.status(200).end();
 });
 

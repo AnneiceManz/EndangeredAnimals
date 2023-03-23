@@ -12,20 +12,20 @@ function SightingRow(props) {
   //     })
   // }
 
-  // //http://localhost:8080/api/sighter/13
-  // const [sighters, setSighters] = useState(null)
-  // const getSighter=() => {
-  //     fetch(`http://localhost:8080/api/sighter/${props.sighted_by}`)
+  // //http://localhost:8080/api/user/13
+  // const [users, setusers] = useState(null)
+  // const getuser=() => {
+  //     fetch(`http://localhost:8080/api/user/${props.sighted_by}`)
   //     .then((response) => response.json())
-  //     .then((sighter) => {
-  //         setSighters(sighter);
-  //         // console.log(sighter)
+  //     .then((user) => {
+  //         setusers(user);
+  //         // console.log(user)
   //     })
   // }
 
   // useEffect(() => {
   //     getSpecies();
-  //     getSighter();
+  //     getuser();
   //   }, []);
 
   return (
@@ -37,7 +37,7 @@ function SightingRow(props) {
       <Table.Cell>{props.longitude}</Table.Cell>
       <Table.Cell>{props.latitude}</Table.Cell>
       <Table.Cell>{props.healthy ? "Healthy" : "Unhealthy"}</Table.Cell>
-      <Table.Cell>{props.sighter ? props.sighter : null}</Table.Cell>
+      <Table.Cell>{props.user ? props.user : null}</Table.Cell>
     </Table.Row>
   );
 }

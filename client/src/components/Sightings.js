@@ -25,20 +25,20 @@ function Sightings() {
   }
   
   
-  //http://localhost:8080/api/sighter/13
-  const [sighter, setSighter] = useState(null)
-  const getSighter=() => {
-      fetch(`http://localhost:8080/api/sighter/${sightings[0].sighted_by}`)
+  //http://localhost:8080/api/user/13
+  const [user, setUser] = useState(null)
+  const getuser=() => {
+      fetch(`http://localhost:8080/api/user/${sightings[0].submitted_by}`)
       .then((response) => response.json())
-      .then((sighter) => {
-          setSighter(sighter);
-          console.log(sighter)
+      .then((user) => {
+          setUser(user);
+          console.log(user)
       })
   }
 
   useEffect(() => {
     getSightings();
-    // getSighter();
+    // getuser();
     // getSpecies();
   }, []);
 
@@ -47,7 +47,7 @@ function Sightings() {
   }
 
   const handleUser = () => {
-    getSighter();
+    getuser();
   }
 
   return (
@@ -76,7 +76,7 @@ function Sightings() {
               longitude={sighting.longitude}
               latitude={sighting.latitude}
               healthy={sighting.healthy}
-              sighted_by={!sighter ? "TBD" : sighter.username}
+              submitted_by={!user ? "TBD" : user.username}
             />
           ))}
         </Table.Body>
