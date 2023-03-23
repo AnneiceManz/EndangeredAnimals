@@ -53,7 +53,15 @@ app.get('/api/individual_animals/:individual_id', cors(), async (req, res) => {
 });
 
 //GET all sightings of one user/sighter
-
+app.get('/api/sightings/:sighter_id', cors(), async (req, res) => {
+  try {
+    const sighter_id=req.params.sighter_id
+    const allSighterSightings = await db.query('SELECT * FROM sightings JOIN sighter ON sighted_by=sighter_id WHERE sighter_id=$1', [sighter_id]);
+    res.send(allSighterSightings.rows);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
 
 
 //A put request - Update a student 
