@@ -24,6 +24,77 @@ app.get("/api/species", cors(), async (req, res) => {
   }
 });
 
+
+  
+  //GET all individuals of one species
+  app.get("/api/individual_animals/:species_id", cors(), async (req, res) => {
+    try {
+      const species_id = req.params.species_id;
+      const allIndividualofSpecies = await db.query(
+        "SELECT * FROM individual_animals JOIN species ON species=species_id WHERE species_id=$1",
+        [species_id]
+        );
+        res.send(allIndividualofSpecies.rows);
+      } catch (e) {
+        return res.status(400).json({ e });
+      }
+    });
+    
+    //GET sightings of one individual animal
+    app.get("/api/sightings/:individual_id", cors(), async (req, res) => {
+      try {
+        const indi_id = req.params.individual_id;
+        const allIndividualSightings = await db.query(
+          "SELECT sightings_id, nickname, species, sighted_by,date, time, longitude, latitude, healthy FROM sightings JOIN individual_animals ON individual=individual_id WHERE individual_id=$1",
+          [indi_id]
+          );
+          res.send(allIndividualSightings.rows);
+        } catch (e) {
+          return res.status(400).json({ e });
+        }
+      });
+      
+      //GET all sighters/users
+      app.get('/api/sighter', cors(), async (req, res) => {
+        try {
+          const allSighters = await db.query('SELECT * FROM sighter')
+          res.send(allSighters.rows)
+        } catch (error) {
+          return res.status(400).json({ e })
+        }
+      })
+
+      //GET all sightings of one user/sighter
+app.get("/api/sightings/:sighter_id", cors(), async (req, res) => {
+  try {
+    const sighter_id = req.params.sighter_id;
+    const allSighterSightings = await db.query(
+      "SELECT * FROM sightings JOIN sighter ON sighted_by=sighter_id WHERE sighter_id=$1",
+      [sighter_id]
+    );
+    res.send(allSighterSightings.rows);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
+
+
+      //POST new individual animal
+app.post("/api/individual_animals", cors(), async (req, res) => {
+  const newIndividual = {
+    nickname: req.body.nickname,
+    species: req.body.species,
+  };
+  console.log([newIndividual.nickname, newIndividual.species]);
+  const result = await db.query(
+    "INSERT INTO individual_animals(nickname, species) VALUES($1, $2) RETURNING *",
+    [newIndividual.nickname, newIndividual.species]
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+
 // POST species request
 app.post("/api/species", cors(), async (req, res) => {
   const newSpecies = {
@@ -46,67 +117,12 @@ app.post("/api/species", cors(), async (req, res) => {
       newSpecies.num_in_wild,
       newSpecies.conservation_stat,
     ]
-  );
-  console.log(result.rows[0]);
-  res.json(result.rows[0]);
-});
-
-//GET all individuals of one species
-app.get("/api/individual_animals/:species_id", cors(), async (req, res) => {
-  try {
-    const species_id = req.params.species_id;
-    const allIndividualofSpecies = await db.query(
-      "SELECT * FROM individual_animals JOIN species ON species=species_id WHERE species_id=$1",
-      [species_id]
     );
-    res.send(allIndividualofSpecies.rows);
-  } catch (e) {
-    return res.status(400).json({ e });
-  }
-});
+    console.log(result.rows[0]);
+    res.json(result.rows[0]);
+  });
 
-//GET sightings of one individual animal
-app.get("/api/individual_animals/:individual_id", cors(), async (req, res) => {
-  try {
-    const indi_id = req.params.individual_id;
-    const allIndividualSightings = await db.query(
-      "SELECT sightings_id, species, sighted_by,date, time, longitude, latitude, healthy FROM sightings JOIN individual_animals ON individual=individual_id WHERE individual_id=$1",
-      [indi_id]
-    );
-    res.send(allIndividualSightings.rows);
-  } catch (e) {
-    return res.status(400).json({ e });
-  }
-});
 
-//POST new individual animal
-app.post("/api/individual_animals", cors(), async (req, res) => {
-  const newIndividual = {
-    nickname: req.body.nickname,
-    species: req.body.species,
-  };
-  console.log([newIndividual.nickname, newIndividual.species]);
-  const result = await db.query(
-    "INSERT INTO individual_animals(nickname, species) VALUES($1, $2) RETURNING *",
-    [newIndividual.nickname, newIndividual.species]
-  );
-  console.log(result.rows[0]);
-  res.json(result.rows[0]);
-});
-
-//GET all sightings of one user/sighter
-app.get("/api/sightings/:sighter_id", cors(), async (req, res) => {
-  try {
-    const sighter_id = req.params.sighter_id;
-    const allSighterSightings = await db.query(
-      "SELECT * FROM sightings JOIN sighter ON sighted_by=sighter_id WHERE sighter_id=$1",
-      [sighter_id]
-    );
-    res.send(allSighterSightings.rows);
-  } catch (e) {
-    return res.status(400).json({ e });
-  }
-});
 
 //POST new sighter/user
 app.post("/api/sighter", cors(), async (req, res) => {
