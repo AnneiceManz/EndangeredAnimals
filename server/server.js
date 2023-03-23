@@ -14,35 +14,28 @@ app.get('/', (req, res) => {
   res.json({ message: 'Hello from My template ExpressJS' });
 });
 
-// create the get request
-app.get('/api/students', cors(), async (req, res) => {
-  // const STUDENTS = [
-
-  //     { id: 1, firstName: 'Lisa', lastName: 'Lee' },
-  //     { id: 2, firstName: 'Eileen', lastName: 'Long' },
-  //     { id: 3, firstName: 'Fariba', lastName: 'Dadko' },
-  //     { id: 4, firstName: 'Cristina', lastName: 'Rodriguez' },
-  //     { id: 5, firstName: 'Andrea', lastName: 'Trejo' },
-  // ];
-  // res.json(STUDENTS);
+// GET all species request
+app.get('/api/species', cors(), async (req, res) => {
   try {
-    const { rows: students } = await db.query('SELECT * FROM students');
-    res.send(students);
+    const allSpecies = await db.query('SELECT * FROM species');
+    res.send(allSpecies.rows);
   } catch (e) {
     return res.status(400).json({ e });
   }
 });
 
-// create the POST request
-app.post('/api/students', cors(), async (req, res) => {
-  const newUser = {
-    firstname: req.body.firstname,
-    lastname: req.body.lastname,
+// POST species request
+app.post('/api/species', cors(), async (req, res) => {
+  const newSpecies = {
+    common_name: req.body.common_name,
+    scientific_name: req.body.scientific_name,
+    num_in_wild: req.body.num_in_wild,
+    conservation_stat: req.body.conservation_stat
   };
-  console.log([newUser.firstname, newUser.lastname]);
+  console.log([newSpecies.common_name, newSpecies.scientific_name, newSpecies.num_in_wild, newSpecies.conservation_stat]);
   const result = await db.query(
-    'INSERT INTO students(firstname, lastname) VALUES($1, $2) RETURNING *',
-    [newUser.firstname, newUser.lastname],
+    'INSERT INTO species(common_name, scientific_name, num_in_wild, conservation_stat) VALUES($1, $2, $3, $4) RETURNING *',
+    [newSpecies.common_name, newSpecies.scientific_name, newSpecies.num_in_wild, newSpecies.conservation_stat],
   );
   console.log(result.rows[0]);
   res.json(result.rows[0]);
