@@ -98,11 +98,11 @@ app.get("/api/sightings/:user_id", cors(), async (req, res) => {
   }
 });
 
-//GET all sightings
+//GET all sightings (currently only receiving rows 1-20)
 app.get('/api/sightings', cors(), async (req, res) => {
   try {
     const allSightings = await db.query(
-      'SELECT date, time, nickname, species, longitude, latitude, healthy, submitted_by FROM sightings JOIN individual_animals ON individual=individual_id'
+      'SELECT date, time, nickname, species, longitude, latitude, healthy, submitted_by FROM sightings JOIN individual_animals ON individual=individual_id WHERE sightings_id BETWEEN 1 AND 20'
     )
     res.send(allSightings.rows);
   } catch (error) {
