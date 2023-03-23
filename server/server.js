@@ -92,7 +92,7 @@ app.get('/api/sightings/:sighter_id', cors(), async (req, res) => {
   }
 });
 
-//POST new sighter
+//POST new sighter/user
 app.post('/api/sighter', cors(), async (req, res) => {
   const newSighter = {
     username: req.body.username,
@@ -106,6 +106,29 @@ app.post('/api/sighter', cors(), async (req, res) => {
   console.log(result.rows[0]);
   res.json(result.rows[0]);
 });
+
+
+//POST new sighting
+app.post('/api/sightings', cors(), async (req, res) => {
+  const newSighting = {
+    date: req.body.date,
+    time: req.body.time,
+    individual: req.body.individual,
+    healthy: req.body.healthy,
+    sighted_by: req.body.sighted_by,
+    longitude: req.body.longitude,
+    latitude: req.body.latitude
+  };
+  console.log([newSighting.date, newSighting.time, newSighting.individual, newSighting.healthy, newSighting.sighted_by, newSighting.longitude, newSighting.latitude]);
+  const result = await db.query(
+    'INSERT INTO sightings(date, time, individual, healthy, sighted_by, longitude, latitude) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+    [newSighting.date, newSighting.time, newSighting.individual, newSighting.healthy, newSighting.sighted_by, newSighting.longitude, newSighting.latitude],
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
+
+
 
 //A put request - Update a student 
 app.put('/api/students/:studentId', cors(), async (req, res) =>{
