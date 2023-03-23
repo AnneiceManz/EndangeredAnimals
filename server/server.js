@@ -92,6 +92,20 @@ app.get('/api/sightings/:sighter_id', cors(), async (req, res) => {
   }
 });
 
+//POST new sighter
+app.post('/api/sighter', cors(), async (req, res) => {
+  const newSighter = {
+    username: req.body.username,
+    email: req.body.email
+  };
+  console.log([newSighter.username, newSighter.email]);
+  const result = await db.query(
+    'INSERT INTO sighter(username, email) VALUES($1, $2) RETURNING *',
+    [newSighter.username, newSighter.email],
+  );
+  console.log(result.rows[0]);
+  res.json(result.rows[0]);
+});
 
 //A put request - Update a student 
 app.put('/api/students/:studentId', cors(), async (req, res) =>{
