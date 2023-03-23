@@ -59,7 +59,7 @@ app.get("/api/species", cors(), async (req, res) => {
         try {
           const allSighters = await db.query('SELECT * FROM sighter')
           res.send(allSighters.rows)
-        } catch (error) {
+        } catch (e) {
           return res.status(400).json({ e })
         }
       })
@@ -77,6 +77,18 @@ app.get("/api/sightings/:sighter_id", cors(), async (req, res) => {
     return res.status(400).json({ e });
   }
 });
+
+
+//GET all individuals
+app.get('/api/individual_animals', cors(), async (rq, res) => {
+try {
+  const allIndividuals= await db.query('SELECT * FROM individual_animals');
+  res.send(allIndividuals.rows)
+} catch (e) {
+  return res.status(400).json({ e })
+}
+  
+})
 
 
       //POST new individual animal
