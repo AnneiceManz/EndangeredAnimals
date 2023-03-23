@@ -41,6 +41,19 @@ app.post('/api/species', cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
+//GET all individuals of one species
+app.get('/api/individual_animals/:species_id', cors(), async (req, res) => {
+  try {
+    const species_id=req.params.species_id
+    const allIndividualofSpecies = await db.query('SELECT * FROM individual_animals JOIN species ON species=species_id WHERE species_id=$1', [species_id]);
+    res.send(allIndividualofSpecies.rows);
+  } catch (e) {
+    return res.status(400).json({ e });
+  }
+});
+
+
+
 //GET sightings of one individual animal
 app.get('/api/individual_animals/:individual_id', cors(), async (req, res) => {
   try {
