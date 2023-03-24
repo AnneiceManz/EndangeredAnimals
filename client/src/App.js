@@ -1,11 +1,13 @@
 import "./App.css";
 import Sightings from "./components/Sightings";
 import Header from "./components/Header";
+import MenuBar from "./components/Menu";
 
 function App() {
   return (
     <div className="App">
       <Header />
+      <MenuBar />
       <Sightings />
     </div>
   );
