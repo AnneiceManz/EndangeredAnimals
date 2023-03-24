@@ -35,12 +35,12 @@ app.get('/api/species/:species_id', cors(), async (req, res) => {
   }
 })
 
-//GET username by user_id
-app.get('/api/user/:user_id', cors(), async (req, res) => {
+//GET usersname by user_id
+app.get('/api/users/:user_id', cors(), async (req, res) => {
   try {
     const user_id=req.params.user_id;
-    const getOneuser = await db.query('SELECT username FROM user WHERE user_id=$1', [user_id])
-    res.send(getOneuser.rows)
+    const getOneUser = await db.query('SELECT username FROM users WHERE user_id=$1', [user_id])
+    res.send(getOneUser.rows)
   } catch (error) {
     return res.status(400).json({ error })
   }
@@ -74,25 +74,25 @@ app.get("/api/sightings/:individual_id", cors(), async (req, res) => {
   }
 });
 
-//GET all users
-app.get("/api/user", cors(), async (req, res) => {
+//GET all userss
+app.get("/api/users", cors(), async (req, res) => {
   try {
-    const allusers = await db.query("SELECT * FROM user");
-    res.send(allusers.rows);
+    const allUsers = await db.query("SELECT * FROM users");
+    res.send(allUsers.rows);
   } catch (e) {
     return res.status(400).json({ e });
   }
 });
 
-//GET all sightings of one user
+//GET all sightings of one users
 app.get("/api/sightings/:user_id", cors(), async (req, res) => {
   try {
     const user_id = req.params.user_id;
-    const alluserSightings = await db.query(
-      "SELECT * FROM sightings JOIN user ON submitted_by=user_id WHERE user_id=$1",
+    const allUserSightings = await db.query(
+      "SELECT * FROM sightings JOIN users ON submitted_by=user_id WHERE user_id=$1",
       [user_id]
     );
-    res.send(alluserSightings.rows);
+    res.send(allUserSightings.rows);
   } catch (e) {
     return res.status(400).json({ e });
   }
@@ -100,14 +100,13 @@ app.get("/api/sightings/:user_id", cors(), async (req, res) => {
 
 //GET all sightings (currently only receiving rows 1-20)
 app.get('/api/sightings', cors(), async (req, res) => {
-  try {
+  // try {
     const allSightings = await db.query(
-      'SELECT date, time, nickname, species, longitude, latitude, healthy, submitted_by FROM sightings JOIN individual_animals ON individual=individual_id WHERE sightings_id BETWEEN 1 AND 20'
-    )
+      'SELECT date, time, individual_animals.nickname, species.common_name as species, longitude, latitude, healthy, users.username as submitted_by FROM sightings JOIN individual_animals ON sightings.individual=individual_animals.individual_id JOIN users ON sightings.submitted_by=users.user_id JOIN species ON individual_animals.species=species.species_id LIMIT 20');
     res.send(allSightings.rows);
-  } catch (error) {
-    return res.status(400).json({ error })
-  }
+  // } catch (error) {
+  //   // return res.status(400).json({ error })
+  // }
 })
 
 //GET all individuals
@@ -162,16 +161,16 @@ app.post("/api/species", cors(), async (req, res) => {
   res.json(result.rows[0]);
 });
 
-//POST new user/user
-app.post("/api/user", cors(), async (req, res) => {
-  const newuser = {
-    username: req.body.username,
+//POST new user
+app.post("/api/users", cors(), async (req, res) => {
+  const newUser = {
+    usersname: req.body.usersname,
     email: req.body.email,
   };
-  console.log([newuser.username, newuser.email]);
+  console.log([newUser.usersname, newUser.email]);
   const result = await db.query(
-    "INSERT INTO user(username, email) VALUES($1, $2) RETURNING *",
-    [newuser.username, newuser.email]
+    "INSERT INTO users(usersname, email) VALUES($1, $2) RETURNING *",
+    [newUser.usersname, newUser.email]
   );
   console.log(result.rows[0]);
   res.json(result.rows[0]);
@@ -258,10 +257,10 @@ app.delete(
   }
 );
 
-//DELETE user/user
-app.delete("/api/user/:user_id", cors(), async (req, res) => {
+//DELETE user
+app.delete("/api/users/:user_id", cors(), async (req, res) => {
   const user_id = req.params.user_id;
-  await db.query("DELETE FROM user WHERE user_id=$1", [user_id]);
+  await db.query("DELETE FROM users WHERE user_id=$1", [user_id]);
   res.status(200).end();
 });
 

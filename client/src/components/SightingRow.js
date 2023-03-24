@@ -37,7 +37,7 @@ function SightingRow(props) {
       <Table.Cell>{props.longitude}</Table.Cell>
       <Table.Cell>{props.latitude}</Table.Cell>
       <Table.Cell>{props.healthy ? "Healthy" : "Unhealthy"}</Table.Cell>
-      <Table.Cell>{props.user ? props.user : null}</Table.Cell>
+      <Table.Cell>{props.submitted_by}</Table.Cell>
     </Table.Row>
   );
 }
