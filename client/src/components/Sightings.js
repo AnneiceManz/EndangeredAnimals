@@ -15,14 +15,19 @@ function Sightings() {
 
   useEffect(() => {
     getSightings();
-    // getusers();
-    // getSpecies();
   }, []);
 
   return (
     <div className="sightingsTable">
       <h2>Recent Sightings</h2>
-      <Table celled selectable collapsing padded color="olive" className="table">
+      <Table
+        celled
+        selectable
+        collapsing
+        padded
+        color="olive"
+        className="table"
+      >
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Nickname</Table.HeaderCell>
