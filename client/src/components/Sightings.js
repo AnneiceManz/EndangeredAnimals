@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import SightingRow from "./SightingRow";
 import { Table } from "semantic-ui-react";
 
-
 function Sightings() {
   const [sightings, setSightings] = useState([]);
 
@@ -14,14 +13,11 @@ function Sightings() {
       });
   };
 
- 
-
   useEffect(() => {
     getSightings();
     // getusers();
     // getSpecies();
   }, []);
-
 
   return (
     <div className="sightingsTable">

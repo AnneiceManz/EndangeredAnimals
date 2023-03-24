@@ -25,26 +25,32 @@ app.get("/api/species", cors(), async (req, res) => {
 });
 
 //GET species common_name by species_id
-app.get('/api/species/:species_id', cors(), async (req, res) => {
+app.get("/api/species/:species_id", cors(), async (req, res) => {
   try {
-    const species_id=req.params.species_id;
-    const getOneSpecies = await db.query('SELECT common_name FROM species WHERE species_id=$1', [species_id])
-    res.send(getOneSpecies.rows)
+    const species_id = req.params.species_id;
+    const getOneSpecies = await db.query(
+      "SELECT common_name FROM species WHERE species_id=$1",
+      [species_id]
+    );
+    res.send(getOneSpecies.rows);
   } catch (error) {
-    return res.status(400).json({ error })
+    return res.status(400).json({ error });
   }
-})
+});
 
 //GET usersname by user_id
-app.get('/api/users/:user_id', cors(), async (req, res) => {
+app.get("/api/users/:user_id", cors(), async (req, res) => {
   try {
-    const user_id=req.params.user_id;
-    const getOneUser = await db.query('SELECT username FROM users WHERE user_id=$1', [user_id])
-    res.send(getOneUser.rows)
+    const user_id = req.params.user_id;
+    const getOneUser = await db.query(
+      "SELECT username FROM users WHERE user_id=$1",
+      [user_id]
+    );
+    res.send(getOneUser.rows);
   } catch (error) {
-    return res.status(400).json({ error })
+    return res.status(400).json({ error });
   }
-})
+});
 
 //GET all individuals of one species
 app.get("/api/individual_animals/:species_id", cors(), async (req, res) => {
@@ -99,15 +105,16 @@ app.get("/api/sightings/:user_id", cors(), async (req, res) => {
 });
 
 //GET all sightings (currently only receiving rows 1-20)
-app.get('/api/sightings', cors(), async (req, res) => {
+app.get("/api/sightings", cors(), async (req, res) => {
   // try {
-    const allSightings = await db.query(
-      'SELECT date, time, individual_animals.nickname, species.common_name as species, longitude, latitude, healthy, users.username as submitted_by FROM sightings JOIN individual_animals ON sightings.individual=individual_animals.individual_id JOIN users ON sightings.submitted_by=users.user_id JOIN species ON individual_animals.species=species.species_id LIMIT 20');
-    res.send(allSightings.rows);
+  const allSightings = await db.query(
+    "SELECT date, time, individual_animals.nickname, species.common_name as species, longitude, latitude, healthy, users.username as submitted_by FROM sightings JOIN individual_animals ON sightings.individual=individual_animals.individual_id JOIN users ON sightings.submitted_by=users.user_id JOIN species ON individual_animals.species=species.species_id LIMIT 20"
+  );
+  res.send(allSightings.rows);
   // } catch (error) {
   //   // return res.status(400).json({ error })
   // }
-})
+});
 
 //GET all individuals
 app.get("/api/individual_animals", cors(), async (rq, res) => {
