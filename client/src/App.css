@@ -1,38 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Titan+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
+
 .App {
   text-align: center;
+  background-color: rgb(168, 128, 81);
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.headerdiv {
+  background-image: url("https://www.planetwildlife.com/sites/default/files/sites/default/files/itinerary/banner/banner_61.jpg");
+  height: 300px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.headertext {
+  padding-top: 80px;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.headertext h1 {
+  font-family: 'Titan One', cursive;
+  font-size: 4em;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.headertext h3{
+  font-family: 'Rubik', sans-serif;
+  font-size: 1.5em;
 }
+
+.sightingsTable {
+  padding-top: 50px;
+  margin: auto;
+  width: 70em;
+}
+
+.formMenu {
+  padding-top: 20px;
+}
+
+h2{
+  color: white;
+}
+

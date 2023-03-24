@@ -1,11 +1,14 @@
 import "./App.css";
-import Students from "./components/students";
+import Sightings from "./components/Sightings";
+import Header from "./components/Header";
+import MenuBar from "./components/FormBar";
 
 function App() {
   return (
     <div className="App">
-      Hello from Techtonica
-      <Students />
+      <Header />
+      <MenuBar />
+      <Sightings />
     </div>
   );
 }
