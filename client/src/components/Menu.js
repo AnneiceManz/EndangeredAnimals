@@ -1,22 +1,23 @@
 import React from 'react';
-import { Menu } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
+import NewUser from './NewUser';
 
 function MenuBar() {
     return (
-        <Menu>
-            <Menu.Item>
-                New User
-            </Menu.Item>
-            <Menu.Item>
+        <Grid columns='equal'>
+            <Grid.Column>
+                <NewUser  />
+            </Grid.Column>
+            <Grid.Column>
                 New Sighting
-            </Menu.Item>
-            <Menu.Item>
+            </Grid.Column>
+            <Grid.Column>
                 New Animal
-            </Menu.Item>
-            <Menu.Item>
+            </Grid.Column>
+            <Grid.Column>
                 New Species
-            </Menu.Item>
-        </Menu>
+            </Grid.Column>
+        </Grid>
     );
 }
 
