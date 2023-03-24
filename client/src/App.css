@@ -4,6 +4,7 @@
 
 .App {
   text-align: center;
+  background-color: rgb(168, 128, 81);
 }
 
 .headerdiv {
@@ -34,5 +35,9 @@
 
 .formMenu {
   padding-top: 20px;
+}
+
+h2{
+  color: white;
 }
 
