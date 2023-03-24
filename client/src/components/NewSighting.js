@@ -1,14 +1,14 @@
 import React, { useReducer } from "react";
-import { Form, Grid } from "semantic-ui-react";
+import { Form, Grid, Label } from "semantic-ui-react";
 
 const initialState = {
-  date: null,
+  date: "",
   time: null,
-  individual: null,
-  longitude: null,
-  latitude: null,
+  individual: "",
+  longitude: "",
+  latitude: "",
   healthy: null,
-  submitted_by: null,
+  submitted_by: "",
 };
 
 function reducer(state, action) {
@@ -41,9 +41,10 @@ function reducer(state, action) {
   }
 }
 
+
 function NewSighting(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-
+  
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
@@ -60,6 +61,7 @@ function NewSighting(props) {
     }
   };
 
+
   return (
     <Grid.Row>
       <h3>New Animal</h3>
@@ -71,6 +73,7 @@ function NewSighting(props) {
         <Form.Group widths="equal">
             <Form.Input
               label="Individual's Id#"
+              type="number"
               required
               value={state.individual}
               onChange={(e) => {
@@ -79,6 +82,7 @@ function NewSighting(props) {
             />
           <Form.Input
             label="Date:"
+            type="date"
             required
             value={state.date}
             onChange={(e) => {
@@ -87,7 +91,7 @@ function NewSighting(props) {
           />
           <Form.Input
             label="Time:"
-            required
+            type="time"
             value={state.time}
             onChange={(e) => {
               dispatch({ type: "editTime", value: e.target.value });
@@ -113,18 +117,19 @@ function NewSighting(props) {
           />
         </Form.Group>
         <Form.Group widths="equal">
-          <Form.Select
+
+          <Form.Input
             label="Healthy?"
-            options="True"
             required
             value={state.healthy}
             onChange={(e) => {
               dispatch({ type: "editHealthy", value: e.target.value });
-            }}
-          />
+            }} />
+
           <Form.Input
             label="Submitted By:"
             required
+            type="number"
             value={state.submitted_by}
             onChange={(e) => {
               dispatch({ type: "editSubmitted_by", value: e.target.value });
