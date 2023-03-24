@@ -2,9 +2,8 @@
   text-align: center;
 }
 
-
 .headerdiv {
-  background-image: url('https://www.planetwildlife.com/sites/default/files/sites/default/files/itinerary/banner/banner_61.jpg');
+  background-image: url("https://www.planetwildlife.com/sites/default/files/sites/default/files/itinerary/banner/banner_61.jpg");
   height: 300px;
 }
 
@@ -13,9 +12,12 @@
   color: white;
 }
 
-.sightingsTable{
+.sightingsTable {
   padding-top: 20px;
   margin: auto;
   width: 80%;
 }
 
+.formMenu {
+  padding-top: 20px;
+}

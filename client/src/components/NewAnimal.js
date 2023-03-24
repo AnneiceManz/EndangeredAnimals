@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Form, Grid } from "semantic-ui-react";
+import { Form, Card } from "semantic-ui-react";
 
 const initialState = {
   nickname: "",
@@ -44,14 +44,14 @@ function NewAnimal(props) {
   };
 
   return (
-    <Grid.Row>
-      <h3>New Animal</h3>
-      <Form
-        id="userSubmission"
-        action="#userSubmission"
-        onSubmit={onSubmitForm}
-      >
-        <Form.Group widths="equal">
+    <Card color="green">
+      <Card.Content>
+        <Card.Header>New Animal</Card.Header>
+        <Form
+          id="userSubmission"
+          action="#userSubmission"
+          onSubmit={onSubmitForm}
+        >
           <Form.Input
             label="Species Id#"
             type="number"
@@ -69,11 +69,11 @@ function NewAnimal(props) {
               dispatch({ type: "editNickname", value: e.target.value });
             }}
           />
-        </Form.Group>
 
-        <Form.Button id="submitUser" type="submit" content="Submit" />
-      </Form>
-    </Grid.Row>
+          <Form.Button id="submitUser" type="submit" content="Submit" />
+        </Form>
+      </Card.Content>
+    </Card>
   );
 }
 

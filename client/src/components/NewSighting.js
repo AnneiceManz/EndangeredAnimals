@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Form, Grid, Label } from "semantic-ui-react";
+import { Form, Card } from "semantic-ui-react";
 
 const initialState = {
   date: "",
@@ -61,82 +61,91 @@ function NewSighting(props) {
   };
 
   return (
-    <Grid.Row>
-      <h3>New Sighting</h3>
-      <Form
-        id="userSubmission"
-        action="#userSubmission"
-        onSubmit={onSubmitForm}
-      >
-        <Form.Group widths="equal">
-          <Form.Input
-            label="Individual's Id#"
-            type="number"
-            required
-            value={state.individual}
-            onChange={(e) => {
-              dispatch({ type: "editIndividual", value: e.target.value });
-            }}
-          />
-          <Form.Input
-            label="Date:"
-            type="date"
-            required
-            value={state.date}
-            onChange={(e) => {
-              dispatch({ type: "editDate", value: e.target.value });
-            }}
-          />
-          <Form.Input
-            label="Time:"
-            type="time"
-            value={state.time}
-            onChange={(e) => {
-              dispatch({ type: "editTime", value: e.target.value });
-            }}
-          />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Input
-            label="Longitude:"
-            required
-            value={state.longitude}
-            onChange={(e) => {
-              dispatch({ type: "editLongitude", value: e.target.value });
-            }}
-          />
-          <Form.Input
-            label="Latitude:"
-            required
-            value={state.latitude}
-            onChange={(e) => {
-              dispatch({ type: "editLatitude", value: e.target.value });
-            }}
-          />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Input
-            label="Healthy?"
-            required
-            value={state.healthy}
-            onChange={(e) => {
-              dispatch({ type: "editHealthy", value: e.target.value });
-            }}
-          />
+    <Card color="orange">
+      <Card.Content>
+        <Card.Header>New Sighting</Card.Header>
+        <Form
+          id="userSubmission"
+          action="#userSubmission"
+          onSubmit={onSubmitForm}
+        >
+          <Form.Group widths="equal">
+            <Form.Input
+              width={1}
+              label="Id#"
+              type="number"
+              required
+              value={state.individual}
+              onChange={(e) => {
+                dispatch({ type: "editIndividual", value: e.target.value });
+              }}
+            />
+            <Form.Input
+              width={4}
+              label="Date Seen"
+              type="date"
+              required
+              value={state.date}
+              onChange={(e) => {
+                dispatch({ type: "editDate", value: e.target.value });
+              }}
+            />
+            <Form.Input
+              width={4}
+              label="Time Seen"
+              type="time"
+              value={state.time}
+              onChange={(e) => {
+                dispatch({ type: "editTime", value: e.target.value });
+              }}
+            />
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Input
+              width={4}
+              label="Longitude"
+              required
+              value={state.longitude}
+              onChange={(e) => {
+                dispatch({ type: "editLongitude", value: e.target.value });
+              }}
+            />
+            <Form.Input
+              width={4}
+              label="Latitude"
+              required
+              value={state.latitude}
+              onChange={(e) => {
+                dispatch({ type: "editLatitude", value: e.target.value });
+              }}
+            />
+          </Form.Group>
+          <Form.Group widths='equal'>
+            <Form.Input
+              width={3}
+              label="Healthy?"
+              required
+              value={state.healthy}
+              onChange={(e) => {
+                dispatch({ type: "editHealthy", value: e.target.value });
+              }}
+            />
+              <Form.Input
+                width={1}
+                label="User#"
+                required
+                type="number"
+                value={state.submitted_by}
+                onChange={(e) => {
+                  dispatch({ type: "editSubmitted_by", value: e.target.value });
+                }}
+              />
+          </Form.Group>
 
-          <Form.Input
-            label="Submitted By:"
-            required
-            type="number"
-            value={state.submitted_by}
-            onChange={(e) => {
-              dispatch({ type: "editSubmitted_by", value: e.target.value });
-            }}
-          />
-        </Form.Group>
-        <Form.Button id="submitUser" type="submit" content="Submit" />
-      </Form>
-    </Grid.Row>
+          <Form.Button id="submitUser" type="submit" content="Submit" />
+        </Form>
+      </Card.Content>
+    </Card>
   );
 }
 

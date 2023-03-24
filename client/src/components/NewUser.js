@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import {Form, Grid } from "semantic-ui-react";
+import { Form, Card } from "semantic-ui-react";
 
 const initialState = {
   username: "",
@@ -41,35 +41,35 @@ function NewUser(props) {
   };
 
   return (
-    <Grid.Row>
-    <h3>New User</h3>
-          <Form
-            id="userSubmission"
-            action="#userSubmission"
-            onSubmit={onSubmitForm}
-          >
-            <Form.Group widths="equal">
-              <Form.Input
-                label="Username"
-                required
-                value={state.username}
-                onChange={(e) => {
-                  dispatch({ type: "editUsername", value: e.target.value });
-                }}
-              />
-              <Form.Input
-                label="Email"
-                required
-                value={state.email}
-                onChange={(e) => {
-                  dispatch({ type: "editEmail", value: e.target.value });
-                }}
-              />
-            </Form.Group>
-            <Form.Button id="submitUser" type="submit" content='Submit' />
+    <Card color="brown">
+      <Card.Content>
+        <Card.Header>New User</Card.Header>
+        <Form
+          id="userSubmission"
+          action="#userSubmission"
+          onSubmit={onSubmitForm}
+        >
+          <Form.Input
+            label="Username"
+            required
+            value={state.username}
+            onChange={(e) => {
+              dispatch({ type: "editUsername", value: e.target.value });
+            }}
+          />
+          <Form.Input
+            label="Email"
+            required
+            value={state.email}
+            onChange={(e) => {
+              dispatch({ type: "editEmail", value: e.target.value });
+            }}
+          />
 
-          </Form>
-    </Grid.Row>
+          <Form.Button id="submitUser" type="submit" content="Submit" />
+        </Form>
+      </Card.Content>
+    </Card>
   );
 }
 

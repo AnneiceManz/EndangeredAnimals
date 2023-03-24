@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Form, Grid } from "semantic-ui-react";
+import { Form, Card } from "semantic-ui-react";
 
 const initialState = {
   common_name: "",
@@ -36,14 +36,11 @@ function NewSpecies(props) {
     e.preventDefault();
     try {
       const body = state;
-      const response = await fetch(
-        "http://localhost:8080/api/species",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(body),
-        }
-      );
+      const response = await fetch("http://localhost:8080/api/species", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
       dispatch({ type: "wipe", value: { initialState } });
       window.location = "/";
     } catch (error) {
@@ -52,54 +49,66 @@ function NewSpecies(props) {
   };
 
   return (
-    <Grid.Row>
-      <h3>New Species</h3>
-      <Form
-        id="userSubmission"
-        action="#userSubmission"
-        onSubmit={onSubmitForm}
-      >
-        <Form.Group widths="equal">
-          <Form.Input
-            label="Common Name"
-            required
-            value={state.common_name}
-            onChange={(e) => {
-              dispatch({ type: "editCommon_name", value: e.target.value });
-            }}
-          />
-          <Form.Input
-            label="Scientific Name"
-            required
-            value={state.scientific_name}
-            onChange={(e) => {
-              dispatch({ type: "editScientific_name", value: e.target.value });
-            }}
-          />
-        </Form.Group>
-        <Form.Group widths="equal">
-          <Form.Input
-            label="Number In Wild"
-            type="number"
-            required
-            value={state.num_in_wild}
-            onChange={(e) => {
-              dispatch({ type: "editNum_in_wild", value: e.target.value });
-            }}
-          />
-          <Form.Input
-            label="Conservation Status"
-            required
-            value={state.conservation_stat}
-            onChange={(e) => {
-              dispatch({ type: "editConservation_stat", value: e.target.value });
-            }}
-          />
-        </Form.Group>
+    <Card color="red">
+      <Card.Content>
+        <Card.Header>New Species</Card.Header>
+        <Form
+          id="userSubmission"
+          action="#userSubmission"
+          onSubmit={onSubmitForm}
+        >
+          <Form.Group widths="equal">
+            <Form.Input
+              width={4}
+              label="Common Name"
+              required
+              value={state.common_name}
+              onChange={(e) => {
+                dispatch({ type: "editCommon_name", value: e.target.value });
+              }}
+            />
+            <Form.Input
+              width={4}
+              label="Scientific Name"
+              required
+              value={state.scientific_name}
+              onChange={(e) => {
+                dispatch({
+                  type: "editScientific_name",
+                  value: e.target.value,
+                });
+              }}
+            />
+          </Form.Group>
+          <Form.Group widths="equal">
+            <Form.Input
+              width={4}
+              label="Number In Wild"
+              type="number"
+              required
+              value={state.num_in_wild}
+              onChange={(e) => {
+                dispatch({ type: "editNum_in_wild", value: e.target.value });
+              }}
+            />
+            <Form.Input
+              width={4}
+              label="Conservation Stat"
+              required
+              value={state.conservation_stat}
+              onChange={(e) => {
+                dispatch({
+                  type: "editConservation_stat",
+                  value: e.target.value,
+                });
+              }}
+            />
+          </Form.Group>
 
-        <Form.Button id="submitUser" type="submit" content="Submit" />
-      </Form>
-    </Grid.Row>
+          <Form.Button id="submitUser" type="submit" content="Submit" />
+        </Form>
+      </Card.Content>
+    </Card>
   );
 }
 
