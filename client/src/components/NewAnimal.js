@@ -21,7 +21,7 @@ function reducer(state, action) {
   }
 }
 
-function NewAnimal(props) {
+function NewAnimal() {
   const [state, dispatch] = useReducer(reducer, initialState);
 
   const onSubmitForm = async (e) => {
@@ -48,8 +48,8 @@ function NewAnimal(props) {
       <Card.Content>
         <Card.Header>New Animal</Card.Header>
         <Form
-          id="userSubmission"
-          action="#userSubmission"
+          id="animalSubmission"
+          action="#animalSubmission"
           onSubmit={onSubmitForm}
         >
           <Form.Input
