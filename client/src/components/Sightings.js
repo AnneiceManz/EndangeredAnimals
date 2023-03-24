@@ -21,7 +21,7 @@ function Sightings() {
 
   return (
     <div className="sightingsTable">
-      <Table celled selectable collapsing padded color="olive">
+      <Table celled selectable collapsing padded color="olive" className="table">
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Nickname</Table.HeaderCell>

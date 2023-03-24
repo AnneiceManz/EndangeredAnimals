@@ -104,11 +104,11 @@ app.get("/api/sightings/:user_id", cors(), async (req, res) => {
   }
 });
 
-//GET all sightings (currently only receiving rows 1-20)
+//GET all sightings (currently limited to 30 rows in descending order)
 app.get("/api/sightings", cors(), async (req, res) => {
   // try {
   const allSightings = await db.query(
-    "SELECT date, time, individual_animals.nickname, species.common_name as species, longitude, latitude, healthy, users.username as submitted_by FROM sightings JOIN individual_animals ON sightings.individual=individual_animals.individual_id JOIN users ON sightings.submitted_by=users.user_id JOIN species ON individual_animals.species=species.species_id LIMIT 20"
+    "SELECT date, time, individual_animals.nickname, species.common_name as species, longitude, latitude, healthy, users.username as submitted_by FROM sightings JOIN individual_animals ON sightings.individual=individual_animals.individual_id JOIN users ON sightings.submitted_by=users.user_id JOIN species ON individual_animals.species=species.species_id ORDER BY date DESC LIMIT 30"
   );
   res.send(allSightings.rows);
   // } catch (error) {
