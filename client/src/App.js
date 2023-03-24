@@ -1,7 +1,7 @@
 import "./App.css";
 import Sightings from "./components/Sightings";
 import Header from "./components/Header";
-import MenuBar from "./components/Menu";
+import MenuBar from "./components/FormBar";
 
 function App() {
   return (

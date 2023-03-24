@@ -5,7 +5,7 @@ import NewSighting from "./NewSighting";
 import NewSpecies from "./NewSpecies";
 import NewUser from "./NewUser";
 
-function MenuBar() {
+function FormBar() {
   return (
     <div className="formMenu">
       <Card.Group centered>
@@ -18,4 +18,4 @@ function MenuBar() {
   );
 }
 
-export default MenuBar;
+export default FormBar;
