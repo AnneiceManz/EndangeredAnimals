@@ -171,13 +171,13 @@ app.post("/api/species", cors(), async (req, res) => {
 //POST new user
 app.post("/api/users", cors(), async (req, res) => {
   const newUser = {
-    usersname: req.body.usersname,
+    username: req.body.username,
     email: req.body.email,
   };
-  console.log([newUser.usersname, newUser.email]);
+  console.log([newUser.username, newUser.email]);
   const result = await db.query(
-    "INSERT INTO users(usersname, email) VALUES($1, $2) RETURNING *",
-    [newUser.usersname, newUser.email]
+    "INSERT INTO users(username, email) VALUES($1, $2) RETURNING *",
+    [newUser.username, newUser.email]
   );
   console.log(result.rows[0]);
   res.json(result.rows[0]);

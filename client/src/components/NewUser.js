@@ -1,5 +1,5 @@
-import React, { useState, useReducer } from "react";
-import {Form, Button, Grid } from "semantic-ui-react";
+import React, { useReducer } from "react";
+import {Form, Grid } from "semantic-ui-react";
 
 const initialState = {
   username: "",
@@ -40,8 +40,6 @@ function NewUser(props) {
     }
   };
 
-  const [open, setOpen] = useState(false);
-
   return (
     <Grid.Row>
     <h3>New User</h3>
@@ -68,9 +66,8 @@ function NewUser(props) {
                 }}
               />
             </Form.Group>
-            <Button id="submitUser" type="submit">
-              Submit
-            </Button>
+            <Form.Button id="submitUser" type="submit" content='Submit' />
+
           </Form>
     </Grid.Row>
   );

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Grid } from 'semantic-ui-react'
+import NewSighting from './NewSighting';
 import NewUser from './NewUser';
 
 function MenuBar() {
@@ -9,7 +10,7 @@ function MenuBar() {
                 <NewUser  />
             </Grid.Column>
             <Grid.Column>
-                New Sighting
+                <NewSighting />
             </Grid.Column>
             <Grid.Column>
                 New Animal
