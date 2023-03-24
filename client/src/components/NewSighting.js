@@ -41,10 +41,9 @@ function reducer(state, action) {
   }
 }
 
-
 function NewSighting(props) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  
+
   const onSubmitForm = async (e) => {
     e.preventDefault();
     try {
@@ -61,25 +60,24 @@ function NewSighting(props) {
     }
   };
 
-
   return (
     <Grid.Row>
-      <h3>New Animal</h3>
+      <h3>New Sighting</h3>
       <Form
         id="userSubmission"
         action="#userSubmission"
         onSubmit={onSubmitForm}
       >
         <Form.Group widths="equal">
-            <Form.Input
-              label="Individual's Id#"
-              type="number"
-              required
-              value={state.individual}
-              onChange={(e) => {
-                dispatch({ type: "editIndividual", value: e.target.value });
-              }}
-            />
+          <Form.Input
+            label="Individual's Id#"
+            type="number"
+            required
+            value={state.individual}
+            onChange={(e) => {
+              dispatch({ type: "editIndividual", value: e.target.value });
+            }}
+          />
           <Form.Input
             label="Date:"
             type="date"
@@ -117,14 +115,14 @@ function NewSighting(props) {
           />
         </Form.Group>
         <Form.Group widths="equal">
-
           <Form.Input
             label="Healthy?"
             required
             value={state.healthy}
             onChange={(e) => {
               dispatch({ type: "editHealthy", value: e.target.value });
-            }} />
+            }}
+          />
 
           <Form.Input
             label="Submitted By:"
